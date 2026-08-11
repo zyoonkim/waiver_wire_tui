@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+
+git diff --cached --name-only | cargo fmt --check
+
