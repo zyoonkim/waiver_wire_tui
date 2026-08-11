@@ -1,6 +1,6 @@
-use crate::app::App;
+use crate::app::{App, CurrentWidget};
 use ratatui::{
-    Frame, layout::{self, Constraint, Direction, HorizontalAlignment::Center, Layout, Rect}, widgets::{Block, List, ListItem, ListState, Paragraph},
+    Frame, layout::{self, Constraint, Direction, HorizontalAlignment::Center, Layout, Rect}, style::{Color, Style}, widgets::{Block, List, ListItem, ListState, Paragraph, Widget}
 };
 
 pub fn draw(frame: &mut Frame, app: &App) {
@@ -29,8 +29,9 @@ fn draw_wishlist(frame: &mut Frame, rect: Rect, app: &App) {
             player.first_name, player.last_name
         )));
     }
+    let selected = app.current_widget == CurrentWidget::Wishlist;
     let list = List::new(items)
-        .block(Block::bordered().title("Wishlist"))
+        .block(Block::bordered().title("Wishlist").border_style(border_style(selected)))
         .highlight_symbol("> ");
     frame.render_stateful_widget(list, rect, &mut state);
 }
@@ -55,7 +56,18 @@ fn draw_search(frame: &mut Frame, rect: Rect, app: &App) {
             player.first_name, player.last_name
         )));
     }
+    let selected = app.current_widget == CurrentWidget::SearchBox;
     let list = List::new(items).highlight_symbol("> ")
-        .block(Block::bordered());
+        .block(Block::bordered().border_style(border_style(selected)));
+
     frame.render_stateful_widget(list, areas[1], &mut state);
+}
+
+
+fn border_style(selected: bool) -> Style {
+    if selected {
+        Style::default().fg(Color::Blue)
+    } else {
+        Style::default()
+    }
 }

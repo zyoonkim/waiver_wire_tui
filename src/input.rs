@@ -10,6 +10,7 @@ pub enum InputResult {
 pub fn handle_key(app: &mut App, key: KeyEvent) -> InputResult {
     match key.code {
         KeyCode::Esc => InputResult::Quit,
+        KeyCode::Char(Q) => InputResult::Quit,
 
         KeyCode::Tab => {
             app.next_widget();
