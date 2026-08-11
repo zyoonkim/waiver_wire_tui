@@ -25,7 +25,7 @@ pub fn draw(frame: &mut Frame, app: &App) {
 
 fn draw_wishlist(frame: &mut Frame, rect: Rect, app: &App) {
     let mut state = ListState::default();
-    state.select(Some(app.selected_watchlist));
+    state.select(Some(app.selected_wishlist));
 
     let mut items: Vec<ListItem> = Vec::new();
     for player in app.wishlist.clone() {

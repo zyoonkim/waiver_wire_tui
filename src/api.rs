@@ -27,7 +27,7 @@ impl ApiClient {
             .await
     }
 
-    pub async fn get_watchlist_ids(&self) -> Result<Vec<String>, reqwest::Error> {
+    pub async fn get_wishlist_ids(&self) -> Result<Vec<String>, reqwest::Error> {
         self.client
             .get(format!("{}/wishlist", self.base_url))
             .send()
@@ -37,12 +37,8 @@ impl ApiClient {
             .await
     }
 
-    pub async fn get_watchlist(
-        &self,
-        players: &[Player],
-    ) -> Result<Vec<Player>, reqwest::Error> {
-        let player_ids: HashSet<String> =
-            self.get_watchlist_ids().await?.into_iter().collect();
+    pub async fn get_wishlist(&self, players: &[Player]) -> Result<Vec<Player>, reqwest::Error> {
+        let player_ids: HashSet<String> = self.get_wishlist_ids().await?.into_iter().collect();
 
         Ok(players
             .iter()
@@ -51,10 +47,7 @@ impl ApiClient {
             .collect())
     }
 
-    pub async fn add_to_watchlist(
-        &self,
-        player_id: &str,
-    ) -> Result<(), reqwest::Error> {
+    pub async fn add_to_wishlist(&self, player_id: &str) -> Result<(), reqwest::Error> {
         self.client
             .post(format!("{}/wishlist/{}", self.base_url, player_id))
             .send()
@@ -64,10 +57,7 @@ impl ApiClient {
         Ok(())
     }
 
-    pub async fn remove_from_watchlist(
-        &self,
-        player_id: &str,
-    ) -> Result<(), reqwest::Error> {
+    pub async fn remove_from_wishlist(&self, player_id: &str) -> Result<(), reqwest::Error> {
         self.client
             .delete(format!("{}/wishlist/{}", self.base_url, player_id))
             .send()

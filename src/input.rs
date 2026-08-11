@@ -1,16 +1,17 @@
 use crossterm::event::{KeyCode, KeyEvent};
 
-use crate::app::App;
+use crate::app::{App, CurrentWidget};
 
 pub enum InputResult {
     Continue,
     Quit,
+    RemoveFromWishlist,
+    AddToWishlist,
 }
 
 pub fn handle_key(app: &mut App, key: KeyEvent) -> InputResult {
     match key.code {
         KeyCode::Esc => InputResult::Quit,
-        KeyCode::Char(Q) => InputResult::Quit,
 
         KeyCode::Tab => {
             app.next_widget();
@@ -33,8 +34,20 @@ pub fn handle_key(app: &mut App, key: KeyEvent) -> InputResult {
         }
 
         KeyCode::Backspace => {
-            app.remove_search_char();
-            InputResult::Continue
+            if app.current_widget == CurrentWidget::SearchBox {
+                app.remove_search_char();
+                InputResult::Continue
+            } else {
+                InputResult::RemoveFromWishlist
+            }
+        }
+
+        KeyCode::Enter => {
+            if app.current_widget == CurrentWidget::SearchBox {
+                InputResult::AddToWishlist
+            } else {
+                InputResult::Continue
+            }
         }
 
         KeyCode::Char(c) => {

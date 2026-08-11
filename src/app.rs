@@ -13,7 +13,7 @@ pub struct App {
     pub players: Vec<Player>,
     pub wishlist: Vec<Player>,
     pub selected_player: usize,
-    pub selected_watchlist: usize,
+    pub selected_wishlist: usize,
     pub search_results: Vec<Player>,
 }
 
@@ -25,7 +25,7 @@ impl App {
             players: players,
             wishlist: wishlist,
             selected_player: 0 as usize,
-            selected_watchlist: 0 as usize,
+            selected_wishlist: 0 as usize,
             search_results: Vec::new(),
         }
     }
@@ -86,15 +86,15 @@ impl App {
 
     pub fn next_wishlist(&mut self) {
         if self.wishlist.len() > 0 {
-            if self.selected_watchlist < self.wishlist.len() - 1 {
-                self.selected_watchlist += 1;
+            if self.selected_wishlist < self.wishlist.len() - 1 {
+                self.selected_wishlist += 1;
             }
         }
     }
 
     pub fn previous_wishlist(&mut self) {
-        if self.selected_watchlist > 0 {
-            self.selected_watchlist -= 1;
+        if self.selected_wishlist > 0 {
+            self.selected_wishlist -= 1;
         }
     }
 
@@ -122,5 +122,13 @@ impl App {
 
     fn search(&mut self) {
         self.search_results = search::search(self.searchbox_input.clone(), &self.players);
+    }
+
+    pub fn selected_search_player(&self) -> Option<&Player> {
+        self.search_results.get(self.selected_player)
+    }
+
+    pub fn selected_wishlist_player(&self) -> Option<&Player> {
+        self.wishlist.get(self.selected_wishlist)
     }
 }
