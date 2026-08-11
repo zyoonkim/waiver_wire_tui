@@ -1,6 +1,9 @@
 use crate::app::{App, CurrentWidget};
 use ratatui::{
-    Frame, layout::{self, Constraint, Direction, HorizontalAlignment::Center, Layout, Rect}, style::{Color, Style}, widgets::{Block, List, ListItem, ListState, Paragraph, Widget}
+    Frame,
+    layout::{self, Constraint, Direction, HorizontalAlignment::Center, Layout, Rect},
+    style::{Color, Style},
+    widgets::{Block, List, ListItem, ListState, Paragraph, Widget},
 };
 
 pub fn draw(frame: &mut Frame, app: &App) {
@@ -8,7 +11,9 @@ pub fn draw(frame: &mut Frame, app: &App) {
         .direction(Direction::Vertical)
         .constraints([Constraint::Length(3), Constraint::Min(0)])
         .split(frame.area());
-    let block = Block::bordered().title("Waiver Wire Watcher").title_alignment(Center);
+    let block = Block::bordered()
+        .title("Waiver Wire Watcher")
+        .title_alignment(Center);
     frame.render_widget(block, areas[0]);
     let panes = Layout::default()
         .direction(Direction::Horizontal)
@@ -31,7 +36,11 @@ fn draw_wishlist(frame: &mut Frame, rect: Rect, app: &App) {
     }
     let selected = app.current_widget == CurrentWidget::Wishlist;
     let list = List::new(items)
-        .block(Block::bordered().title("Wishlist").border_style(border_style(selected)))
+        .block(
+            Block::bordered()
+                .title("Wishlist")
+                .border_style(border_style(selected)),
+        )
         .highlight_symbol("> ");
     frame.render_stateful_widget(list, rect, &mut state);
 }
@@ -57,12 +66,12 @@ fn draw_search(frame: &mut Frame, rect: Rect, app: &App) {
         )));
     }
     let selected = app.current_widget == CurrentWidget::SearchBox;
-    let list = List::new(items).highlight_symbol("> ")
+    let list = List::new(items)
+        .highlight_symbol("> ")
         .block(Block::bordered().border_style(border_style(selected)));
 
     frame.render_stateful_widget(list, areas[1], &mut state);
 }
-
 
 fn border_style(selected: bool) -> Style {
     if selected {
