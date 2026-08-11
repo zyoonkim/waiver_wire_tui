@@ -6,3 +6,7 @@ edition = "2024"
 [dependencies]
 crossterm = "0.29.0"
 ratatui = "0.30.2"
+serde = {version = "1.0", features = ["derive"] }
+reqwest = { version = "0.11", features = ["json"] }
+fuzzy-matcher = "=0.3.7"
+tokio = {version = "1", features = ["full"] }
