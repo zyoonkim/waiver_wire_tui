@@ -1,5 +1,5 @@
-// mod api;
-mod apistub;
+mod api;
+// mod apistub;
 mod app;
 mod input;
 mod models;
@@ -8,8 +8,8 @@ mod ui;
 
 use std::io;
 
-// use api::ApiClient;
-use apistub::ApiClient;
+use api::ApiClient;
+// use apistub::ApiClient;
 use app::App;
 use crossterm::{
     event::{self, Event},
