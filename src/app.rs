@@ -1,20 +1,20 @@
 use crate::models::Player;
 use crate::search;
 
-#[derive(PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq)]
 pub enum CurrentWidget {
     Wishlist,
     SearchBox,
 }
 
 pub struct App {
-    pub current_widget: CurrentWidget,
-    pub searchbox_input: String,
-    pub players: Vec<Player>,
-    pub wishlist: Vec<Player>,
-    pub selected_player: usize,
-    pub selected_wishlist: usize,
-    pub search_results: Vec<Player>,
+    current_widget: CurrentWidget,
+    searchbox_input: String,
+    players: Vec<Player>,
+    wishlist: Vec<Player>,
+    selected_player: usize,
+    selected_wishlist: usize,
+    search_results: Vec<Player>,
 }
 
 impl App {
@@ -130,5 +130,34 @@ impl App {
 
     pub fn selected_wishlist_player(&self) -> Option<&Player> {
         self.wishlist.get(self.selected_wishlist)
+    }
+
+    pub fn current_widget(&self) -> CurrentWidget {
+        self.current_widget.clone()
+    }
+
+    pub fn searchbox_input(&self) -> String {
+        self.searchbox_input.clone()
+    }
+
+    pub fn players(&self) -> Vec<Player> {
+        self.players.clone()
+    }
+    pub fn wishlist(&self) -> Vec<Player> {
+        self.wishlist.clone()
+    }
+    pub fn selected_player(&self) -> usize {
+        self.selected_player
+    }
+
+    pub fn selected_wishlist(&self) -> usize {
+        self.selected_wishlist
+    }
+    pub fn search_results(&self) -> Vec<Player> {
+        self.search_results.clone()
+    }
+
+    pub fn reset_wishlist(&mut self, new_wishlist: Vec<Player>) {
+        self.wishlist = new_wishlist;
     }
 }

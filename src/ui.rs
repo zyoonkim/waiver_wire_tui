@@ -25,16 +25,16 @@ pub fn draw(frame: &mut Frame, app: &App) {
 
 fn draw_wishlist(frame: &mut Frame, rect: Rect, app: &App) {
     let mut state = ListState::default();
-    state.select(Some(app.selected_wishlist));
+    state.select(Some(app.selected_wishlist()));
 
     let mut items: Vec<ListItem> = Vec::new();
-    for player in app.wishlist.clone() {
+    for player in app.wishlist() {
         items.push(ListItem::new(format!(
             "{} {}",
             player.first_name, player.last_name
         )));
     }
-    let selected = app.current_widget == CurrentWidget::Wishlist;
+    let selected = app.current_widget() == CurrentWidget::Wishlist;
     let list = List::new(items)
         .block(
             Block::bordered()
@@ -50,22 +50,22 @@ fn draw_search(frame: &mut Frame, rect: Rect, app: &App) {
         .direction(Direction::Vertical)
         .constraints([Constraint::Length(3), Constraint::Min(0)])
         .split(rect);
-    let searchbar =
-        Paragraph::new(app.searchbox_input.as_str()).block(Block::bordered().title("Search"));
+    let binding = app.searchbox_input();
+    let searchbar = Paragraph::new(binding).block(Block::bordered().title("Search"));
 
     frame.render_widget(searchbar, areas[0]);
 
     let mut state = ListState::default();
-    state.select(Some(app.selected_player));
+    state.select(Some(app.selected_player()));
 
     let mut items: Vec<ListItem> = Vec::new();
-    for player in app.search_results.clone() {
+    for player in app.search_results().clone() {
         items.push(ListItem::new(format!(
             "{} {}",
             player.first_name, player.last_name
         )));
     }
-    let selected = app.current_widget == CurrentWidget::SearchBox;
+    let selected = app.current_widget() == CurrentWidget::SearchBox;
     let list = List::new(items)
         .highlight_symbol("> ")
         .block(Block::bordered().border_style(border_style(selected)));

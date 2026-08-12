@@ -68,9 +68,9 @@ async fn run_app(
                     {
                         api.add_to_wishlist(&player_id).await.unwrap();
 
-                        let wishlist = api.get_wishlist(&app.players).await.unwrap();
+                        let wishlist = api.get_wishlist(&app.players()).await.unwrap();
 
-                        app.wishlist = wishlist;
+                        app.reset_wishlist(wishlist);
                     }
                 }
 
@@ -81,9 +81,9 @@ async fn run_app(
                     {
                         api.remove_from_wishlist(&player_id).await.unwrap();
 
-                        let wishlist = api.get_wishlist(&app.players).await.unwrap();
+                        let wishlist = api.get_wishlist(&app.players()).await.unwrap();
 
-                        app.wishlist = wishlist;
+                        app.reset_wishlist(wishlist);
                     }
                 }
             }

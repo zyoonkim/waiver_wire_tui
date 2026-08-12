@@ -34,7 +34,7 @@ pub fn handle_key(app: &mut App, key: KeyEvent) -> InputResult {
         }
 
         KeyCode::Backspace => {
-            if app.current_widget == CurrentWidget::SearchBox {
+            if app.current_widget() == CurrentWidget::SearchBox {
                 app.remove_search_char();
                 InputResult::Continue
             } else {
@@ -43,7 +43,7 @@ pub fn handle_key(app: &mut App, key: KeyEvent) -> InputResult {
         }
 
         KeyCode::Enter => {
-            if app.current_widget == CurrentWidget::SearchBox {
+            if app.current_widget() == CurrentWidget::SearchBox {
                 InputResult::AddToWishlist
             } else {
                 InputResult::Continue
